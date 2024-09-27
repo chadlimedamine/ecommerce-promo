@@ -1,3 +1,4 @@
+A small ecommerce API with the capabilities to create products, add products to a cart, make an order for the cart, create promo codes with discounts, apply promo codes to the order.
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
