@@ -12,3 +12,73 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  fullName String
+  email String
+  passwordHash String
+  carts Cart[]
+  orders Order[]
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+  name String
+  price Int
+  amount Int
+  cartItems CartItem[]
+  orderItems OrderItem[]
+}
+
+model Cart {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  status CartStatus
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  cartItems CartItem[]
+}
+
+model CartItem {
+  id Int @id @default(autoincrement())
+  addedAt DateTime @default(now())
+  productId Int 
+  product Product @relation(fields: [productId], references: [id])
+  cartId Int
+  cart Cart @relation(fields: [cartId], references: [id])
+}
+
+model Order {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  status OrderStatus
+  totalPrice Int
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  oderItems OrderItem[]
+}
+
+model OrderItem {
+  id Int @id @default(autoincrement())
+  addedAt DateTime @default(now())
+  productId Int 
+  product Product @relation(fields: [productId], references: [id])
+  orderId Int
+  order Order @relation(fields: [orderId], references: [id])
+}
+
+enum CartStatus {
+  ongoing
+  done
+}
+
+enum OrderStatus {
+  pending
+  payed
+  shipped
+}
