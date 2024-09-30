@@ -31,4 +31,42 @@ export class CartService {
 
         return cart;
     }
+
+    async addItemToCart(
+        productId: number,
+        cartId: number,
+    ){
+        const cart = await this.prisma.cart.findUnique(
+            {
+                where: {
+                    id: cartId,
+                }
+            }
+        );
+
+        if (!cart)
+            throw new NotFoundException(`Cart with id ${cartId} not found`);
+
+        const product = await this.prisma.product.findUnique(
+            {
+                where: {
+                    id: productId
+                }
+            }
+        );
+
+        if (!product)
+            throw new NotFoundException(`Product with uid ${productId} not found`);
+
+        const cartItem = await this.prisma.cartItem.create(
+            {
+                data: {
+                    cartId: cartId,
+                    productId: productId
+                }
+            }
+        );
+
+        return cartItem;
+    }
 }
