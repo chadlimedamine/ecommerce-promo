@@ -69,4 +69,41 @@ export class CartService {
 
         return cartItem;
     }
+
+    async removeItemFromCart(
+        cartId: number,
+        cartItemId: number,
+    ){
+        const cart = await this.prisma.cart.findUnique(
+            {
+                where: {
+                    id: cartId,
+                }
+            }
+        );
+
+        if (!cart)
+            throw new NotFoundException(`Cart with id ${cartId} not found`);
+
+        const cartItem = await this.prisma.cartItem.findUnique(
+            {
+                where: {
+                    id: cartItemId
+                }
+            }
+        );
+
+        if (!cartItem)
+            throw new NotFoundException(`Cartitem with uid ${cartItemId} not found`);
+
+        await this.prisma.cartItem.delete(
+            {
+                where: {
+                    id: cartItemId
+                }
+            }
+        );
+
+        return cartItem;
+    }
 }
