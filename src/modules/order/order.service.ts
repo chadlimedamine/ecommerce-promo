@@ -72,7 +72,25 @@ export class OrderService {
         let totalPriceAfterDiscount = totalPriceBeforeDiscount;
         for (let index = 0; index < cart.promotionAppliedOnCart.length; index++) {
             const promotionAppliedOnCart = cart.promotionAppliedOnCart[index];
-            if (
+            if (!promotionAppliedOnCart.promotion.minimumPurchaseAmount){
+                totalPriceAfterDiscount -= promotionAppliedOnCart.promotion.flatDiscount;
+                const updatedorder = await this.prisma.order.update(
+                    {
+                        where: {
+                            id: createdOrder.id,
+                        },
+                        data: {
+                            totalPriceAfterDiscount: totalPriceAfterDiscount,
+                            promotionAppliedOnOrder: {
+                                create: {
+                                    promotionId: promotionAppliedOnCart.promotionId,
+                                }
+                            }
+                        }
+                    }
+                );
+            }
+            else if (
                 totalPriceBeforeDiscount >= 
                 promotionAppliedOnCart.promotion.minimumPurchaseAmount
             ){
@@ -174,7 +192,7 @@ export class OrderService {
 
         if (!order)
             throw new NotFoundException(`Order with id: ${orderId} not found`);
-        
+
         return order;
     }
 }
