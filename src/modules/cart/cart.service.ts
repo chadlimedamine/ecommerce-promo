@@ -106,4 +106,16 @@ export class CartService {
 
         return cartItem;
     }
+
+    async getCurrentCart(){
+        const currentCart = await this.prisma.cart.findFirst(
+            {
+                where: {
+                    status: 'ongoing'
+                }
+            }
+        );
+
+        return currentCart;
+    }
 }

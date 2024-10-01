@@ -113,6 +113,17 @@ export class OrderService {
             }
         }
 
+        await this.prisma.cart.update(
+            {
+                where: {
+                    id: cartId
+                },
+                data: {
+                    status: 'done'
+                }
+            }
+        );
+        
         const finilizedOrder = await this.prisma.order.update(
             {
                 where: {
