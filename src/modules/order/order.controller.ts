@@ -2,7 +2,7 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto';
 
-@Controller('order')
+@Controller('orders')
 export class OrderController {
     constructor(private orderService: OrderService){}
 

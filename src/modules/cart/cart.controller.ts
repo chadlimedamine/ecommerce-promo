@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Param, ParseIntPipe, Post } from '@nestjs/com
 import { CartService } from './cart.service';
 import { AddItemToCartDto, CreateCartDto } from './dto';
 
-@Controller('cart')
+@Controller('carts')
 export class CartController {
     constructor(private cartService: CartService){}
 
