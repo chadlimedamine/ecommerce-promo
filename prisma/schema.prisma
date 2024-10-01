@@ -42,6 +42,7 @@ model Cart {
   user User @relation(fields: [userId], references: [id])
   cartItems CartItem[]
   order Order?
+  promotionAppliedOnCart PromotionAppliedOnCart[]
 }
 
 model CartItem {
@@ -83,6 +84,7 @@ model Promotion {
   flatDiscount Int
   minimumPurchaseAmount Int
   promotionAppliedOnOrder PromotionAppliedOnOrder[]
+  promotionAppliedOnCart PromotionAppliedOnCart[]
 }
 model PromotionAppliedOnOrder {
   id Int @unique @default(autoincrement())
@@ -93,6 +95,17 @@ model PromotionAppliedOnOrder {
   order Order @relation(fields: [orderId], references: [id])
 
   @@id([promotionId, orderId], name: "promotionAppliedOnorderId")
+}
+
+model PromotionAppliedOnCart {
+  id Int @unique @default(autoincrement())
+  appliedAt DateTime @default(now())
+  promotionId Int
+  promotion Promotion @relation(fields: [promotionId], references: [id])
+  cartId Int
+  cart Cart @relation(fields: [cartId], references: [id])
+
+  @@id([promotionId, cartId], name: "promotionAppliedOnCartId")
 }
 
 enum CartStatus {
