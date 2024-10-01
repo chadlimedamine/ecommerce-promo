@@ -112,6 +112,30 @@ export class CartService {
             {
                 where: {
                     status: 'ongoing'
+                },
+                select: {
+                    id: true,
+                    _count: true,
+                    status: true,
+                    createdAt: true,
+                    updatedAt: true,
+                    userId: true,
+                    cartItems: {
+                        select: {
+                            id: true,
+                            addedAt: true,
+                            productId: true,
+                            product: true,
+                        }
+                    },
+                    promotionAppliedOnCart: {
+                        select: {
+                            id: true,
+                            appliedAt: true,
+                            promotionId: true,
+                            promotion: true,
+                        }
+                    }
                 }
             }
         );
