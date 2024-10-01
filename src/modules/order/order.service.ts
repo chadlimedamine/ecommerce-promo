@@ -134,4 +134,47 @@ export class OrderService {
 
         return finilizedOrder;
     }
+
+    async getOrderById(
+        orderId: number,
+    ){
+        const order = await this.prisma.order.findUnique(
+            {
+                where: {
+                    id: orderId,
+                },
+                select: {
+                    id: true,
+                    _count: true,
+                    cartId: true,
+                    createdAt: true,
+                    updatedAt: true,
+                    status: true,
+                    userId: true,
+                    totalPriceBeforeDiscount: true,
+                    totalPriceAfterDiscount: true,
+                    oderItems: {
+                        select: {
+                            id: true,
+                            productId: true,
+                            product: true,
+                        }
+                    },
+                    promotionAppliedOnOrder: {
+                        select: {
+                            id: true,
+                            appliedAt: true,
+                            promotionId: true,
+                            promotion: true,
+                        }
+                    }
+                }
+            }
+        );
+
+        if (!order)
+            throw new NotFoundException(`Order with id: ${orderId} not found`);
+        
+        return order;
+    }
 }
