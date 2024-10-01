@@ -23,7 +23,7 @@ export class PromotionController {
     }
 
     @Delete('/:promotionId')
-    async removePromotionToCart(
+    async removePromotionFromCart(
         @Param('promotionId', ParseIntPipe) promotionId: number,
         @Body() deletePromotionFromCartDto: DeletePromotionFromCartDto,
     ){
