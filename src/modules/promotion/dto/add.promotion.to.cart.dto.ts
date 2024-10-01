@@ -1,8 +1,11 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { Type } from "class-transformer";
+import { IsInt, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class AddPromotionToCartDto {
     
-    @IsNumber()
+    
+    @IsInt()
+    @Type(() => Number)
     @IsNotEmpty()
     cartId: number;
 }

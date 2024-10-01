@@ -45,7 +45,7 @@ export class CartService {
         );
 
         if (!cart)
-            throw new NotFoundException(`Cart with id ${cartId} not found`);
+            throw new NotFoundException(`Cart with id: ${cartId} not found`);
 
         const product = await this.prisma.product.findUnique(
             {
@@ -56,7 +56,7 @@ export class CartService {
         );
 
         if (!product)
-            throw new NotFoundException(`Product with uid ${productId} not found`);
+            throw new NotFoundException(`Product with id: ${productId} not found`);
 
         const cartItem = await this.prisma.cartItem.create(
             {
@@ -83,7 +83,7 @@ export class CartService {
         );
 
         if (!cart)
-            throw new NotFoundException(`Cart with id ${cartId} not found`);
+            throw new NotFoundException(`Cart with id: ${cartId} not found`);
 
         const cartItem = await this.prisma.cartItem.findUnique(
             {
@@ -94,7 +94,7 @@ export class CartService {
         );
 
         if (!cartItem)
-            throw new NotFoundException(`Cartitem with uid ${cartItemId} not found`);
+            throw new NotFoundException(`Cartitem with id: ${cartItemId} not found`);
 
         await this.prisma.cartItem.delete(
             {
@@ -112,6 +112,30 @@ export class CartService {
             {
                 where: {
                     status: 'ongoing'
+                },
+                select: {
+                    id: true,
+                    _count: true,
+                    status: true,
+                    createdAt: true,
+                    updatedAt: true,
+                    userId: true,
+                    cartItems: {
+                        select: {
+                            id: true,
+                            addedAt: true,
+                            productId: true,
+                            product: true,
+                        }
+                    },
+                    promotionAppliedOnCart: {
+                        select: {
+                            id: true,
+                            appliedAt: true,
+                            promotionId: true,
+                            promotion: true,
+                        }
+                    }
                 }
             }
         );
