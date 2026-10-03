@@ -23,7 +23,7 @@
 </p>
 
 <p align="center">
-  <a href="#highlights">✨ Highlights</a> ·
+  <a href="#code-tour">🧭 Code tour</a> ·
   <a href="#architecture">🏗️ Architecture</a> ·
   <a href="#data-model">🗃️ Data model</a> ·
   <a href="#checkout">💸 Checkout engine</a> ·
@@ -34,26 +34,25 @@
 
 ---
 
-| 📡 **9** | 🗃️ **9** | 🧬 **4** | 🔀 **7** | ⏱️ **5 days** |
-|:---:|:---:|:---:|:---:|:---:|
-| REST endpoints | relational models | versioned DB migrations | merged pull requests | from scaffold to checkout |
+| 📡 **9** | 🗃️ **9** | 🧬 **4** | 🔀 **7** |
+|:---:|:---:|:---:|:---:|
+| REST endpoints | relational models | versioned DB migrations | merged pull requests |
 
-<a id="highlights"></a>
+<a id="code-tour"></a>
 
-## 💼 What this project demonstrates
+## 🧭 Code tour
 
-| Skill | How it shows up | Where to look |
+| Area | Approach | Where to look |
 |---|---|---|
-| 🧩 **Modular backend architecture** | Feature modules (cart, promotion, order) with dependency injection; shared infrastructure exposed through `@Global()` modules | [app.module.ts](src/app.module.ts) · [prisma.module.ts](src/modules/prisma/prisma.module.ts) |
-| 🗃️ **Relational data modelling** | 9 models, 2 enums, junction tables with composite primary keys, a 1-to-1 cart → order link | [schema.prisma](prisma/schema.prisma) |
-| 🧬 **Schema evolution** | 4 incremental migrations, including a non-destructive change that makes the minimum spend optional | [prisma/migrations/](prisma/migrations/) |
+| 🧩 **Architecture** | Feature modules (cart, promotion, order) wired with dependency injection; shared infrastructure exposed through `@Global()` modules | [app.module.ts](src/app.module.ts) · [prisma.module.ts](src/modules/prisma/prisma.module.ts) |
+| 🗃️ **Data model** | 9 models, 2 enums, junction tables with composite primary keys, a 1-to-1 cart → order link | [schema.prisma](prisma/schema.prisma) |
+| 🧬 **Migrations** | 4 incremental migrations, including a non-destructive change that makes the minimum spend optional | [prisma/migrations/](prisma/migrations/) |
 | 💸 **Business logic** | Stackable flat discounts, conditional minimum-spend eligibility, frozen order totals | [order.service.ts](src/modules/order/order.service.ts) |
-| 🛡️ **Input validation & API hygiene** | DTOs with `class-validator`, global whitelist pipe that blocks mass assignment, `ParseIntPipe` on route params, typed `404` errors | [main.ts](src/main.ts) · [cart/dto/](src/modules/cart/dto/) |
-| 🔒 **Type safety end to end** | Prisma-generated client types flow from the schema into every service | [prisma.service.ts](src/modules/prisma/prisma.service.ts) |
-| 🌿 **Professional Git workflow** | Feature branches, PR-based merges, Conventional Commits (`feat:`, `fix:`, `refactor:`) | [commit history](https://github.com/chadlimedamine/ecommerce-promo/commits/master) |
+| 🛡️ **Validation** | DTOs with `class-validator`, a global whitelist pipe that blocks mass assignment, `ParseIntPipe` on route params, typed `404` errors | [main.ts](src/main.ts) · [cart/dto/](src/modules/cart/dto/) |
+| 🔒 **Type safety** | Prisma-generated client types flow from the schema into every service | [prisma.service.ts](src/modules/prisma/prisma.service.ts) |
 
 > [!TIP]
-> **Short on time?** Read [order.service.ts](src/modules/order/order.service.ts). The checkout and promotion engine lives there, and it touches almost every table in the schema.
+> **New to the codebase?** Start with [order.service.ts](src/modules/order/order.service.ts). The checkout and promotion engine lives there, and it touches almost every table in the schema.
 
 ## ✨ Features
 
